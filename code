@@ -1,0 +1,66 @@
+def somMatrice(a,b):
+    l,c = dim(a)
+    l1,c1 = dim(b)
+    assert (l,c)==(l1,c1)
+    n = mO(l,c)
+    for i in range(l):
+        for j in range(c):
+            n[i][j]= a[i][j]+b[i][j]
+    return n
+
+def multpScalaire(x, a):
+    l,c = dime(a)
+    m = mO(l,c)
+    for i in range(l):
+        for j in range(c):
+            m[i][j]=x*a[i][j]
+    return m
+
+def prodMatrice(a,b):
+    l,c = dimension(a)
+    l1,c1 = dimension(b)
+    assert c==l1
+    m = []
+    for i in range(l):
+        mat=[]
+        for j in range(c1): 
+            x=0
+            for k in range(c):
+                x = x + a[i][k]*b[k][j]
+            mat.append(s)
+        m.append(mat)
+    return m
+
+def blocs(a0,a,b):
+    l,c= dimension(a0)
+    m = matriceNulle(l*a,c*b)
+    for i in range(l*a):
+        for j in range(b*c):
+            m[i][j]= a0[i%l][j%c]
+    return m
+
+def expRap(x,n): 
+    if n == 0:
+        return 1
+    elif n%2 == 0:
+        return expRap(x**2, n/2)
+    elif n%2 != 0:
+        return x*expRap(x**2,(n-1)/2)
+
+def expnaif(a,n): 
+    l,c = dimension(a)
+    if n==0: 
+        return matriceUn(l)
+    elif n == 1: 
+        return a 
+    else: 
+        return prodMatrice(a, expnaif(a,n-1))
+
+def expoRapMat(a,n):
+    l,c= dimension(a)
+    if n == 0:
+        return matriceUn(l)
+    if n%2 == 0:
+        return expoRapMat(expnaif(a,2), n/2)
+    if n%2 == 1:
+        return produitMat(a, expRapMat(expnaif(a,2),(n-1)/2))
